@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clickup2notion"
+dynamic = ["version"]
+description = 'Export clickup list to notion database'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Murillo Bianconi", email = "murillo.bianconi@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "aiohttp",
+  "notion-client",
+  "click",
+  "python-dotenv",
+  "aiohttp-client-cache[all]",
+]
+
+[project.urls]
+Documentation = "https://github.com/Murillo Bianconi/clickup2notion#readme"
+Issues = "https://github.com/Murillo Bianconi/clickup2notion/issues"
+Source = "https://github.com/Murillo Bianconi/clickup2notion"
+
+[tool.hatch.version]
+path = "src/clickup2notion/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/clickup2notion tests}"
+
+[tool.coverage.run]
+source_pkgs = ["clickup2notion", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/clickup2notion/__about__.py",
+]
+
+[tool.coverage.paths]
+clickup2notion = ["src/clickup2notion", "*/clickup2notion/src/clickup2notion"]
+tests = ["tests", "*/clickup2notion/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.hatch.scripts]
+export_tasks = "clickup2notion.export:main"

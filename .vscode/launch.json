@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Export",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/clickup2notion/export.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--clickup_list_id",
+                "181036833",
+                "--notion_database_id",
+                "f8f16696e2d74c1586b8d388693f24fa",
+            ]
+        }
+    ]
+}
