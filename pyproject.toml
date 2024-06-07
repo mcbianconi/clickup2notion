@@ -30,6 +30,7 @@ dependencies = [
   "click",
   "python-dotenv",
   "aiohttp-client-cache[all]",
+  "black",
 ]
 
 [project.urls]
