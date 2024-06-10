@@ -8,13 +8,13 @@
             "name": "Export",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/src/clickup2notion/export.py",
+            "program": "${workspaceFolder}/src/clickup2notion/main.py",
             "console": "integratedTerminal",
             "args": [
-                "--clickup_list_id",
-                "181036833",
+                "--clickup_csv_path",
+                "${workspaceFolder}/data/clickup_export.csv",
                 "--notion_database_id",
-                "f8f16696e2d74c1586b8d388693f24fa",
+                "1014f6517bc349e5aa969281f83ee956",
             ]
         }
     ]

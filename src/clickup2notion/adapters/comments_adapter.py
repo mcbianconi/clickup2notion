@@ -3,7 +3,7 @@ from .base_adapter import ClickUpToNotionAdapter
 
 class CommentsAdapter(ClickUpToNotionAdapter):
     def convert(self, clickup_data: dict) -> dict:
-        comments = clickup_data.get("comments", [])
+        comments = clickup_data.get("Comments", [])
         notion_comments = [
             {
                 "object": "block",
@@ -13,7 +13,7 @@ class CommentsAdapter(ClickUpToNotionAdapter):
                         {
                             "type": "text",
                             "text": {
-                                "content": comment["comment_text"],
+                                "content": f"{comment["text"]} by {comment.get("by", "???")} em {comment["date"]}",
                             },
                         }
                     ]

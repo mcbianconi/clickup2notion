@@ -8,11 +8,13 @@ load_dotenv()
 
 
 @click.command()
-@click.option("--clickup_list_id", required=True, help="ID da lista do ClickUp")
+@click.option(
+    "--clickup_csv_path", required=True, help="Caminho CSV de exportação do clickup"
+)
 @click.option(
     "--notion_database_id", required=True, help="ID da base de dados do Notion"
 )
-def main(clickup_list_id, notion_database_id):
+def main(clickup_csv_path, notion_database_id):
     clickup_api_token = os.getenv("CLICKUP_API_TOKEN")
     notion_api_token = os.getenv("NOTION_API_TOKEN")
 
@@ -22,9 +24,7 @@ def main(clickup_list_id, notion_database_id):
         )
         return
 
-    asyncio.run(
-        export(clickup_list_id, notion_database_id, clickup_api_token, notion_api_token)
-    )
+    asyncio.run(export(clickup_csv_path, notion_database_id, notion_api_token))
 
 
 if __name__ == "__main__":

@@ -15,14 +15,14 @@ logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger("clickup2notion")
 
-attachment_semaphore = asyncio.Semaphore(value=100)
+attachment_semaphore = asyncio.Semaphore(value=3)
 
 _attachments_store = {}
 
 
-async def get_task_attachments(session, task, semaphore):
+async def get_task_attachments(session, task):
     url = f"https://api.clickup.com/api/v2/task/{task['id']}"
-    async with semaphore:
+    async with attachment_semaphore:
         async with session.get(url) as response:
             response.raise_for_status()
             clickup_task_data = await response.json()

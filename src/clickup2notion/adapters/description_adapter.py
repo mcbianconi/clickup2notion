@@ -1,9 +1,10 @@
 from .base_adapter import ClickUpToNotionAdapter
+from clickup2notion.utils.helpers import split_text
 
 
-class CreatorAdapter(ClickUpToNotionAdapter):
+class DescriptionAdapter(ClickUpToNotionAdapter):
     def convert(self, clickup_data: dict) -> dict:
-        creator = clickup_data.get("creator", {}).get("email", "???")
+        description = clickup_data.get("Task Content", "???")
         return {
             "children": [
                 {
@@ -14,11 +15,12 @@ class CreatorAdapter(ClickUpToNotionAdapter):
                             {
                                 "type": "text",
                                 "text": {
-                                    "content": creator,
+                                    "content": chunk,
                                 },
                             }
                         ]
                     },
                 }
+                for chunk in split_text(description)
             ]
         }

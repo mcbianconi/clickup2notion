@@ -1,18 +1,41 @@
+from typing import cast
+import logging
+from clickup2notion.adapters.attachments_adapter import AttachmentsAdapter
+from clickup2notion.adapters.comments_adapter import CommentsAdapter
+from clickup2notion.adapters.dates_adapter import DatesAdapter
+from clickup2notion.adapters.description_adapter import DescriptionAdapter
+from clickup2notion.adapters.space_info_adapter import SpaceInfoAdapter
+from clickup2notion.adapters.status_adapter import StatusAdapter
+from clickup2notion.adapters.task_name_adapter import TaskNameAdapter
 from .base_adapter import ClickUpToNotionAdapter
 
 
-class CompositeAdapter(ClickUpToNotionAdapter):
-    def __init__(self):
-        self._children = []
+class NotionDBRowAdapter(ClickUpToNotionAdapter):
+    def __init__(self, parent_page_id: str):
+        self._parent_page_id = parent_page_id
+        self._logger = logging.getLogger("NotionDBRowAdapter")
+        self._children = [
+            TaskNameAdapter(),
+            DescriptionAdapter(),
+            StatusAdapter(),
+            DatesAdapter(),
+            AttachmentsAdapter(),
+            CommentsAdapter(),
+            SpaceInfoAdapter(),
+        ]
 
     def add(self, adapter: ClickUpToNotionAdapter):
         self._children.append(adapter)
 
     def convert(self, clickup_data: dict) -> dict:
+        self._logger.debug(f"Converting ClickUp data to Notion data: {clickup_data}")
         notion_data: dict = {"properties": {}, "children": []}
         for child in self._children:
             child_data = child.convert(clickup_data)
-            notion_data = self._merge_dicts(notion_data, child_data)
+            notion_data = cast(
+                dict, self._merge_dicts(cast(dict, notion_data), child_data)
+            )
+        notion_data.update({"parent": {"database_id": self._parent_page_id}})
         return notion_data
 
     def _merge_dicts(self, dict1: dict, dict2: dict) -> dict:
