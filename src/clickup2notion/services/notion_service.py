@@ -15,6 +15,7 @@ async def create_database_properties(notion_client, database_id):
         "Space": {"select": {}},
         "Folder": {"select": {}},
         "List": {"select": {}},
+        "Task Custom ID": {"rich_text": {}},
     }
 
     properties_to_update = {

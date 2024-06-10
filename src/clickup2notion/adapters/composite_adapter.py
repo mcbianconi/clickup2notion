@@ -1,16 +1,16 @@
 from typing import cast
 import logging
-from clickup2notion.adapters.attachments_adapter import AttachmentsAdapter
-from clickup2notion.adapters.comments_adapter import CommentsAdapter
-from clickup2notion.adapters.dates_adapter import DatesAdapter
-from clickup2notion.adapters.description_adapter import DescriptionAdapter
-from clickup2notion.adapters.space_info_adapter import SpaceInfoAdapter
-from clickup2notion.adapters.status_adapter import StatusAdapter
-from clickup2notion.adapters.task_name_adapter import TaskNameAdapter
+from .attachments_adapter import AttachmentsAdapter
+from .comments_adapter import CommentsAdapter
+from .dates_adapter import DatesAdapter
+from .description_adapter import DescriptionAdapter
+from .space_info_adapter import SpaceInfoAdapter
+from .status_adapter import StatusAdapter
+from .task_name_adapter import TaskNameAdapter
 from .base_adapter import ClickUpToNotionAdapter
 
 
-class NotionDBRowAdapter(ClickUpToNotionAdapter):
+class CompositeAdapter(ClickUpToNotionAdapter):
     def __init__(self, parent_page_id: str):
         self._parent_page_id = parent_page_id
         self._logger = logging.getLogger("NotionDBRowAdapter")

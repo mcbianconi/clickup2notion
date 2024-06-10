@@ -8,5 +8,11 @@ class SpaceInfoAdapter(ClickUpToNotionAdapter):
                 "Space": {"select": {"name": clickup_data.get("Space Name")}},
                 "Folder": {"select": {"name": clickup_data.get("Folder Name")}},
                 "List": {"select": {"name": clickup_data.get("List Name")}},
+                "Task Custom ID": {
+                    "type": "text",
+                    "text": {
+                        "content": clickup_data.get("Task Custom ID", "")
+                    }
+                },
             }
         }

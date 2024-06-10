@@ -1,9 +1,8 @@
 import asyncio
 import logging
 
-from clickup2notion.adapters import (
-    NotionDBRowAdapter,
-)
+from clickup2notion.adapters.composite_adapter import CompositeAdapter
+
 from clickup2notion.services import clickup_service, notion_service
 
 from notion_client import AsyncClient
@@ -18,11 +17,11 @@ async def export(clickup_csv_path, notion_database_id, notion_api_token):
     notion_client = AsyncClient(auth=notion_api_token)
     await notion_service.create_database_properties(notion_client, notion_database_id),
 
-    notion_adapter = NotionDBRowAdapter(notion_database_id)
+    notion_adapter = CompositeAdapter(notion_database_id)
 
     async with asyncio.TaskGroup() as g:
-        for task in all_tasks:
-            page_data = notion_adapter.convert(task)
+        for clickup_task in all_tasks:
+            page_data = notion_adapter.convert(clickup_task)
             g.create_task(notion_service.create_page(notion_client, page_data))
         logger.info("Starting migration")
 
