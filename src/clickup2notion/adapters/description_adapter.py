@@ -5,8 +5,10 @@ from clickup2notion.utils.helpers import split_text
 class DescriptionAdapter(ClickUpToNotionAdapter):
     def convert(self, clickup_data: dict) -> dict:
         description = clickup_data.get("Task Content", "???")
-        return {
-            "children": [
+        description_chunks = description.replace("\\n", "\n").split("\n")
+        children = []
+        for chunk in description_chunks:
+            children.append(
                 {
                     "object": "block",
                     "type": "paragraph",
@@ -21,6 +23,6 @@ class DescriptionAdapter(ClickUpToNotionAdapter):
                         ]
                     },
                 }
-                for chunk in split_text(description)
-            ]
-        }
+            )
+
+        return {"children": children}

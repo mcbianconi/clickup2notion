@@ -24,3 +24,6 @@ async def export(clickup_csv_path, notion_database_id, notion_api_token):
         for task in all_tasks:
             page_data = notion_adapter.convert(task)
             g.create_task(notion_service.create_page(notion_client, page_data))
+        logger.info("Starting migration")
+
+    logger.info("Migration completed")

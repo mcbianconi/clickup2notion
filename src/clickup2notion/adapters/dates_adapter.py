@@ -12,7 +12,9 @@ class DatesAdapter(ClickUpToNotionAdapter):
         try:
             creation_date = timestamp_to_ISO8601(creation_date_text)
         except Exception:
-            logger.error(f"Erro de parse Date Created: {creation_date_text} - task ID {clickup_data.get('Task ID')} ({clickup_data.get('Task Custom ID')})")
+            logger.error(
+                f"Erro de parse Date Created: {creation_date_text} - task ID {clickup_data.get('Task ID')} ({clickup_data.get('Task Custom ID')})"
+            )
             creation_date = None
 
         return {
