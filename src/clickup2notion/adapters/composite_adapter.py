@@ -1,5 +1,7 @@
 from typing import cast
 import logging
+
+from .tags_adapter import TagsAdapter
 from .attachments_adapter import AttachmentsAdapter
 from .comments_adapter import CommentsAdapter
 from .dates_adapter import DatesAdapter
@@ -22,6 +24,7 @@ class CompositeAdapter(ClickUpToNotionAdapter):
             AttachmentsAdapter(),
             CommentsAdapter(),
             SpaceInfoAdapter(),
+            TagsAdapter(),
         ]
 
     def add(self, adapter: ClickUpToNotionAdapter):

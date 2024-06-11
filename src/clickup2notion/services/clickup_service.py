@@ -60,7 +60,7 @@ def parse_csv_tasks(clickup_csv_path):
 
     with open(clickup_csv_path, "r") as file:
         reader = csv.DictReader(file)
-        for row in reader: # Modelo padrão exportado pelo clickup
+        for row in reader:  # Modelo padrão exportado pelo clickup
             task = {
                 "Task ID": row["Task ID"],
                 "Task Custom ID": row["Task Custom ID"],

@@ -30,16 +30,16 @@ async def create_database_properties(notion_client, database_id):
         await notion_client.databases.update(database_id=database_id, **update_data)
 
 
-semaphore = asyncio.Semaphore(3)
+_create_page_semaphore = asyncio.Semaphore(3)
 
 
 async def create_page(notion_client, page_data):
     try:
-        async with semaphore:
+        async with _create_page_semaphore:
             await notion_client.pages.create(**page_data)
             logger.info(f"Página criada no Notion: {page_data}")
             await asyncio.sleep(
                 1
-            )  # isso + semáforo = 3 requests per second = rate limit da API deles
+            )  # isso + semáforo de 3 requests per second = dentro do rate limit da API deles
     except Exception as err:
         logger.exception(f"Erro ao criar página no Notion: {err}\n")
